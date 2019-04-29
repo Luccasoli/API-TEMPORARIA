@@ -1,9 +1,11 @@
 const db = require("../../config/db");
 
+const tableName = 'prato'
+
 class PratoController {
   async getPratos(req, res) {
     db.select()
-      .table("prato")
+      .table(tableName)
       .then(pratos => {
         res.status(200).json(pratos);
       })
@@ -15,7 +17,7 @@ class PratoController {
   getPratoById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
-      .table("prato")
+      .table(tableName)
       .where({ id })
       .then(Prato => {
         res.status(200).json(Prato);
@@ -26,10 +28,10 @@ class PratoController {
   }
 
   insertPrato(req, res) {
-    const { nome, imgs, tipo } = req.body;
+    let { nome, imgs, tipo } = req.body;
 
-    db("Prato")
-      .insert({ nome, imgs, tipo })
+    db(tableName)
+      .insert({nome })
       .returning("*")
       .then(Prato => {
         res.status(200).json(Prato);
@@ -42,7 +44,7 @@ class PratoController {
   removePratoById(req, res) {
     const id = parseInt(req.body.id);
 
-    db("Prato")
+    db(tableName)
       .where({ id })
       .del()
       .then(num => {
@@ -57,7 +59,7 @@ class PratoController {
     const id = parseInt(req.params.id);
     const { nome, imgs, tipo } = req.body;
 
-    db("Prato")
+    db(tableName)
       .where({ id })
       .update({ nome, imgs, tipo })
       .returning("*")
