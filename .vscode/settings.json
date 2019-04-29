@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "connectionTimeout": 30,
+            "database": "db9v990ido02c6",
+            "dialect": "PostgreSQL",
+            "name": "heroku  sistema receitas",
+            "password": "3640c8f6fcc69c931a6694f708d8c775f3193a339171d455fabbeebe06773492",
+            "port": 5432,
+            "server": "ec2-54-225-129-101.compute-1.amazonaws.com",
+            "username": "qbyvbqnovxmbex"
+        }
+    ]
+}

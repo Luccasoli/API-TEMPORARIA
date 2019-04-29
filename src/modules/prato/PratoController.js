@@ -1,48 +1,48 @@
 const db = require("../../config/db");
 
-class AutorController {
-  async getAutores(req, res) {
+class PratoController {
+  async getPratos(req, res) {
     db.select()
-      .table("autor")
-      .then(autores => {
-        res.status(200).json(autores);
+      .table("prato")
+      .then(pratos => {
+        res.status(200).json(pratos);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  getAutorById(req, res) {
+  getPratoById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
-      .table("autor")
+      .table("prato")
       .where({ id })
-      .then(autor => {
-        res.status(200).json(autor);
+      .then(Prato => {
+        res.status(200).json(Prato);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  insertAutor(req, res) {
+  insertPrato(req, res) {
     const { nome, email, senha, foto_perfil, tipo } = req.body;
 
-    db("autor")
+    db("Prato")
       .insert({ nome, email, senha, foto_perfil, tipo })
       .returning("*")
-      .then(autor => {
-        res.status(200).json(autor);
+      .then(Prato => {
+        res.status(200).json(Prato);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  removeAutorById(req, res) {
+  removePratoById(req, res) {
     const id = parseInt(req.body.id);
 
-    db("autor")
+    db("Prato")
       .where({ id })
       .del()
       .then(num => {
@@ -53,16 +53,16 @@ class AutorController {
       });
   }
 
-  updateAutor(req, res) {
+  updatePrato(req, res) {
     const id = parseInt(req.params.id);
     const { nome, email, senha, foto_perfil, tipo } = req.body;
 
-    db("autor")
+    db("Prato")
       .where({ id })
       .update({ nome, email, senha, foto_perfil, tipo })
       .returning("*")
-      .then(autor => {
-        res.status(200).json(autor);
+      .then(Prato => {
+        res.status(200).json(Prato);
       })
       .catch(err => {
         res.status(500).json(err);
@@ -70,4 +70,4 @@ class AutorController {
   }
 }
 
-module.exports = new AutorController();
+module.exports = new PratoController();
