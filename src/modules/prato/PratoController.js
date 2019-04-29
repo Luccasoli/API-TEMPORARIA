@@ -26,10 +26,10 @@ class PratoController {
   }
 
   insertPrato(req, res) {
-    const { nome, email, senha, foto_perfil, tipo } = req.body;
+    const { nome, imgs, tipo } = req.body;
 
     db("Prato")
-      .insert({ nome, email, senha, foto_perfil, tipo })
+      .insert({ nome, imgs, tipo })
       .returning("*")
       .then(Prato => {
         res.status(200).json(Prato);
@@ -55,11 +55,11 @@ class PratoController {
 
   updatePrato(req, res) {
     const id = parseInt(req.params.id);
-    const { nome, email, senha, foto_perfil, tipo } = req.body;
+    const { nome, imgs, tipo } = req.body;
 
     db("Prato")
       .where({ id })
-      .update({ nome, email, senha, foto_perfil, tipo })
+      .update({ nome, imgs, tipo })
       .returning("*")
       .then(Prato => {
         res.status(200).json(Prato);
