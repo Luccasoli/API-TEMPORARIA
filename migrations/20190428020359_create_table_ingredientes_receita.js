@@ -10,7 +10,6 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("receita")
       .notNull();
-    table.float("calorias").notNull();
     table.primary(["ingrediente", "receita"]);
   });
 };

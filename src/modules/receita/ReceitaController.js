@@ -1,47 +1,47 @@
 const db = require("../../config/db");
 
-const tableName = 'prato'
+const tableName = 'receita'
 
-class PratoController {
-  async getPratos(req, res) {
+class ReceitaController {
+  async getReceitas(req, res) {
     db.select()
       .table(tableName)
-      .then(pratos => {
-        res.status(200).json(pratos);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  getPratoById(req, res) {
+  getReceitaById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
       .table(tableName)
       .where({ id })
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  insertPrato(req, res) {
-    const { nome, imgs, tipo } = req.body;
+  insertReceita(req, res) {
+    const { nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato } = req.body;
 
     db(tableName)
-      .insert({ nome, imgs, tipo })
+      .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  removePratoById(req, res) {
+  removeReceitaById(req, res) {
     const id = parseInt(req.params.id);
 
     db(tableName)
@@ -55,16 +55,16 @@ class PratoController {
       });
   }
 
-  updatePrato(req, res) {
+  updateReceita(req, res) {
     const id = parseInt(req.params.id);
-    const { nome, imgs, tipo } = req.body;
+    const { nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato } = req.body;
 
     db(tableName)
       .where({ id })
-      .update({ nome, imgs, tipo })
+      .update({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
@@ -72,4 +72,4 @@ class PratoController {
   }
 }
 
-module.exports = new PratoController();
+module.exports = new ReceitaController();

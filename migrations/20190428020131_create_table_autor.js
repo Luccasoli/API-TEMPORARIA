@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
         table.inherits('usuario')
         table.increments('id').primary()
         table.specificType('tipo', 'text').notNull()
+        table.unique('email')
     })
 };
 

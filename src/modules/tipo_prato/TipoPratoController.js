@@ -1,47 +1,47 @@
 const db = require("../../config/db");
 
-const tableName = 'prato'
+const tableName = 'tipo_prato'
 
-class PratoController {
-  async getPratos(req, res) {
+class TipoPratoController {
+  async getTipoPrato(req, res) {
     db.select()
       .table(tableName)
-      .then(pratos => {
-        res.status(200).json(pratos);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  getPratoById(req, res) {
+  getTipoPratoById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
       .table(tableName)
       .where({ id })
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  insertPrato(req, res) {
-    const { nome, imgs, tipo } = req.body;
+  insertTipoPrato(req, res) {
+    const { nome } = req.body;
 
     db(tableName)
-      .insert({ nome, imgs, tipo })
+      .insert({ nome })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  removePratoById(req, res) {
+  removeTipoPratoById(req, res) {
     const id = parseInt(req.params.id);
 
     db(tableName)
@@ -55,16 +55,16 @@ class PratoController {
       });
   }
 
-  updatePrato(req, res) {
+  updateTipoPrato(req, res) {
     const id = parseInt(req.params.id);
-    const { nome, imgs, tipo } = req.body;
+    const { nome } = req.body;
 
     db(tableName)
       .where({ id })
-      .update({ nome, imgs, tipo })
+      .update({ nome })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
@@ -72,4 +72,4 @@ class PratoController {
   }
 }
 
-module.exports = new PratoController();
+module.exports = new TipoPratoController();

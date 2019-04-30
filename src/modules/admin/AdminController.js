@@ -1,21 +1,25 @@
 const db = require("../../config/db");
 
 const { obterHash } = require("../../utils");
-const tableName = "autor";
+const tableName = "admin";
 
-class AutorController {
-    async getAutores(req, res) {
-        db.select()
-            .table(tableName)
-            .then(data => {
-                res.status(200).json(data);
-            })
-            .catch(err => {
-                res.status(500).json(err);
-            });
+class AdminController {
+    async getAdmins(req, res) {
+        if (req.user.is_admin) {
+            db.select()
+                .table(tableName)
+                .then(data => {
+                    res.status(200).json(data);
+                })
+                .catch(err => {
+                    res.status(500).json(err);
+                });
+        } else {
+            res.status(401).send("Unathorized");
+        }
     }
 
-    getAutorById(req, res) {
+    getAdminById(req, res) {
         const id = parseInt(req.params.id);
         db.select()
             .table(tableName)
@@ -28,24 +32,19 @@ class AutorController {
             });
     }
 
-    async insertAutor(req, res) {
-        const { nome, email, senha, foto_perfil, tipo } = req.body;
+    async insertAdmin(req, res) {
+        const { nome, email, senha, foto_perfil } = req.body;
 
-        const user = await db("usuario").where({ email }).first();
+        const user = await db("usuario")
+            .where({ email })
+            .first();
 
         if (!user) {
             obterHash(senha, hash => {
                 const senha = hash;
 
                 db(tableName)
-                    .insert({
-                        nome,
-                        email,
-                        senha,
-                        foto_perfil,
-                        tipo,
-                        is_admin: false
-                    })
+                    .insert({ nome, email, senha, foto_perfil, is_admin: true })
                     .returning("*")
                     .then(data => {
                         res.status(200).json(data);
@@ -59,7 +58,7 @@ class AutorController {
         }
     }
 
-    removeAutorById(req, res) {
+    removeAdminById(req, res) {
         const id = parseInt(req.params.id);
 
         db(tableName)
@@ -73,11 +72,13 @@ class AutorController {
             });
     }
 
-    async updateAutor(req, res) {
+    async updateAdmin(req, res) {
         const id = parseInt(req.params.id);
-        const { nome, email, senha, foto_perfil, tipo } = req.body;
+        const { nome, email, senha, foto_perfil } = req.body;
 
-        const user = await db("usuario").where({ email }).first();
+        const user = await db("usuario")
+            .where({ email })
+            .first();
 
         if (!user) {
             obterHash(senha, hash => {
@@ -85,14 +86,7 @@ class AutorController {
 
                 db(tableName)
                     .where({ id })
-                    .update({
-                        nome,
-                        email,
-                        senha,
-                        foto_perfil,
-                        tipo,
-                        is_admin: false
-                    })
+                    .update({ nome, email, senha, foto_perfil, is_admin: true })
                     .returning("*")
                     .then(data => {
                         res.status(200).json(data);
@@ -107,4 +101,4 @@ class AutorController {
     }
 }
 
-module.exports = new AutorController();
+module.exports = new AdminController();

@@ -1,47 +1,47 @@
 const db = require("../../config/db");
 
-const tableName = 'prato'
+const tableName = 'ingrediente'
 
-class PratoController {
-  async getPratos(req, res) {
+class IngredienteController {
+  async getIngredientes(req, res) {
     db.select()
       .table(tableName)
-      .then(pratos => {
-        res.status(200).json(pratos);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  getPratoById(req, res) {
+  getIngredienteById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
       .table(tableName)
       .where({ id })
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  insertPrato(req, res) {
-    const { nome, imgs, tipo } = req.body;
+  insertIngrediente(req, res) {
+    const { nome, calorias, img } = req.body;
 
     db(tableName)
-      .insert({ nome, imgs, tipo })
+      .insert({ nome, calorias, img })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
       });
   }
 
-  removePratoById(req, res) {
+  removeIngredienteById(req, res) {
     const id = parseInt(req.params.id);
 
     db(tableName)
@@ -55,16 +55,16 @@ class PratoController {
       });
   }
 
-  updatePrato(req, res) {
+  updateIngrediente(req, res) {
     const id = parseInt(req.params.id);
-    const { nome, imgs, tipo } = req.body;
+    const { nome, calorias, img } = req.body;
 
     db(tableName)
       .where({ id })
-      .update({ nome, imgs, tipo })
+      .update({ nome, calorias, img })
       .returning("*")
-      .then(Prato => {
-        res.status(200).json(Prato);
+      .then(data => {
+        res.status(200).json(data);
       })
       .catch(err => {
         res.status(500).json(err);
@@ -72,4 +72,4 @@ class PratoController {
   }
 }
 
-module.exports = new PratoController();
+module.exports = new IngredienteController();

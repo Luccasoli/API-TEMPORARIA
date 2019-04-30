@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.string("nome", 50).notNull();
     table.specificType("passos", "text[]").notNull();
     table.integer("qnt_porcoes").notNull();
-    table.timestamp("tempo_preparo").notNull();
+    table.float("tempo_preparo").notNull();
     table.specificType("imgs", "text[]");
 
     table
