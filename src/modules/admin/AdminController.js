@@ -5,18 +5,14 @@ const tableName = "admin";
 
 class AdminController {
     async getAdmins(req, res) {
-        if (req.user.is_admin) {
-            db.select()
-                .table(tableName)
-                .then(data => {
-                    res.status(200).json(data);
-                })
-                .catch(err => {
-                    res.status(500).json(err);
-                });
-        } else {
-            res.status(401).send("Unathorized");
-        }
+        db.select()
+            .table(tableName)
+            .then(data => {
+                res.status(200).json(data);
+            })
+            .catch(err => {
+                res.status(500).json(err);
+            });
     }
 
     getAdminById(req, res) {
