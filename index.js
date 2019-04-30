@@ -31,9 +31,12 @@ app.use(Sigin);
 app.use(AutorRoutes);
 app.use(authenticate());
 app.use(AdminRoutes);
+app.get("/", (req, res) => {
+    res.status(200).send("Verifique o código fonte");
+});
 
 /*
-  Usar o Header:
+  Para as rotas a seguir, usar o Header:
     Authorization: Bearer <token>
 */
 
@@ -46,9 +49,6 @@ app.use(IngredientesReceita);
 app.use(TipoPrato);
 app.use(TiposPrato);
 
-app.get("/", (req, res) => {
-    res.status(200).send("Hello World");
-});
 
 app.set("json spaces", 4);
 
