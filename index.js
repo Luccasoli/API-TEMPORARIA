@@ -29,11 +29,11 @@ app.use(initialize());
 app.use(Sigin);
 
 app.use(AutorRoutes);
-app.use(authenticate());
 app.use(AdminRoutes);
 app.get("/", (req, res) => {
     res.status(200).send("Verifique o código fonte");
 });
+app.use(authenticate());
 
 /*
   Para as rotas a seguir, usar o Header:
