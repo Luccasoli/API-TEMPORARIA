@@ -1,5 +1,5 @@
-exports.up = function(knex, Promise) {
-  return knex.schema.createTable("editar_receita", table => {
+exports.up = async function(knex, Promise) {
+  await knex.schema.createTable("editar_receita", table => {
     table
       .integer("autor")
       .references("id")
@@ -15,11 +15,14 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("admin")
       .notNull();
-    table.integer("aprovacao").notNull(); // TODO: Inserir o CHECK: nota INTEGER NOT NULL CHECK (nota >= 1 AND nota <= 5),
-    //knex.schema.raw('ALTER TABLE my_table MODIFY cmdId INT UNSIGNED AUTO_INCREMENT');
+    table.integer("aprovacao").notNull(); 
     table.string("tipo", 100).notNull();
     table.primary(["autor", "receita", "admin"]);
   });
+
+  await knex.schema.raw(
+    'ALTER TABLE "editar_receita" ADD CONSTRAINT "tipos_aprovacao" CHECK(aprovacao >= 1 AND aprovacao <= 3)'
+  );
 };
 
 exports.down = function(knex, Promise) {

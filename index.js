@@ -17,11 +17,8 @@ const { initialize, authenticate } = require("./src/config/passport");
 
 const app = express();
 const port = process.env.PORT || 3001;
-const domain = "localhost";
-
-app.db = db;
-
 app.use(bodyParser.json());
+app.db = db;
 
 app.use(initialize());
 
@@ -33,7 +30,7 @@ app.use(AdminRoutes);
 app.get("/", (req, res) => {
     res.status(200).send("Verifique o código fonte");
 });
-app.use(authenticate());
+// app.use(authenticate());
 
 /*
   Para as rotas a seguir, usar o Header:
