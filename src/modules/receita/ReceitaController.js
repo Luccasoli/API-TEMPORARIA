@@ -47,6 +47,30 @@ class ReceitaController {
       });
   }
 
+  getReceitasByAutor(req, res) {
+    const id_autor = parseInt(req.params.id);
+
+    db.select(
+      "receita.id",
+      "receita.nome",
+      "receita.passos",
+      "receita.qnt_porcoes",
+      "tempo_preparo",
+      "receita.imgs",
+      "receita.autor",
+      "receita.prato"
+    )
+      .table(tableName)
+      .innerJoin("autor", "receita.autor", "autor.id")
+      .where("autor.id", "=", id_autor)
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  }
+
   getReceitaById(req, res) {
     const id = parseInt(req.params.id);
     db.select()
