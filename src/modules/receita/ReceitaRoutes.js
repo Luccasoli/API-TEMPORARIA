@@ -7,4 +7,6 @@ routes.put("/putReceita/:id", ReceitaController.updateReceita);
 routes.post("/removeReceita/:id", ReceitaController.removeReceitaById);
 routes.post("/addReceita", ReceitaController.insertReceita);
 
+routes.get("/getReceitasByIngrediente/:id", ReceitaController.getReceitasByIngrediente);
+
 module.exports = routes;

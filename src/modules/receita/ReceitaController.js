@@ -1,11 +1,44 @@
 const db = require("../../config/db");
 
-const tableName = 'receita'
+const tableName = "receita";
 
 class ReceitaController {
   async getReceitas(req, res) {
     db.select()
       .table(tableName)
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  }
+
+  getReceitasByIngrediente(req, res) {
+    const id_ingrediente = parseInt(req.params.id);
+
+    db.select(
+      "receita.id",
+      "receita.nome",
+      "receita.passos",
+      "receita.qnt_porcoes",
+      "tempo_preparo",
+      "receita.imgs",
+      "receita.autor",
+      "receita.prato"
+    )
+      .table(tableName)
+      .innerJoin(
+        "ingredientes_receita",
+        "ingredientes_receita.receita",
+        `${tableName}.id`
+      )
+      .innerJoin(
+        "ingrediente",
+        "ingredientes_receita.ingrediente",
+        "ingrediente.id"
+      )
+      .where("ingrediente.id", "=", id_ingrediente)
       .then(data => {
         res.status(200).json(data);
       })
@@ -28,7 +61,15 @@ class ReceitaController {
   }
 
   insertReceita(req, res) {
-    const { nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato } = req.body;
+    const {
+      nome,
+      passos,
+      qnt_porcoes,
+      tempo_preparo,
+      imgs,
+      autor,
+      prato
+    } = req.body;
 
     db(tableName)
       .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
@@ -57,7 +98,15 @@ class ReceitaController {
 
   updateReceita(req, res) {
     const id = parseInt(req.params.id);
-    const { nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato } = req.body;
+    const {
+      nome,
+      passos,
+      qnt_porcoes,
+      tempo_preparo,
+      imgs,
+      autor,
+      prato
+    } = req.body;
 
     db(tableName)
       .where({ id })
