@@ -1,6 +1,6 @@
 const db = require("../../config/db");
 
-const tableName = 'ingredientes_receita'
+const tableName = "ingredientes_receita";
 
 class IngredientesReceitaController {
   async getIngredientesReceita(req, res) {
@@ -28,10 +28,10 @@ class IngredientesReceitaController {
   }
 
   insertIngredientesReceita(req, res) {
-    const { ingrediente, receita } = req.body;
+    const { ingrediente, receita, quantidade } = req.body;
 
     db(tableName)
-      .insert({ ingrediente, receita })
+      .insert({ ingrediente, receita, quantidade })
       .returning("*")
       .then(data => {
         res.status(200).json(data);
@@ -41,11 +41,11 @@ class IngredientesReceitaController {
       });
   }
 
-  removeIngredientesReceitaById(req, res) {
-    const id = parseInt(req.params.id);
+  removeIngredientesReceitaByPK(req, res) {
+    const { ingrediente, receita } = req.body;
 
     db(tableName)
-      .where({ id })
+      .where({ ingrediente, receita })
       .del()
       .then(num => {
         res.status(200).send();
@@ -57,11 +57,11 @@ class IngredientesReceitaController {
 
   updateIngredientesReceita(req, res) {
     const id = parseInt(req.params.id);
-    const { ingrediente, receita } = req.body;
+    const { ingrediente, receita, quantidade } = req.body;
 
     db(tableName)
       .where({ id })
-      .update({ ingrediente, receita })
+      .update({ ingrediente, receita, quantidade })
       .returning("*")
       .then(data => {
         res.status(200).json(data);

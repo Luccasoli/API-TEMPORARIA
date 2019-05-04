@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("receita")
       .notNull();
+    // table.string("quantidade", 100);
     table.primary(["ingrediente", "receita"]);
   });
 };
