@@ -14,6 +14,35 @@ class IngredienteController {
       });
   }
 
+  getIngredientesByReceita(req, res) {
+    const id_receita = parseInt(req.params.id);
+
+    db.select(
+      "ingrediente.id",
+      "ingrediente.nome",
+      "ingrediente.calorias",
+      "ingrediente.img",
+    )
+      .table(tableName)
+      .innerJoin(
+        "ingredientes_receita",
+        "ingredientes_receita.ingrediente",
+        `${tableName}.id`
+      )
+      .innerJoin(
+        "receita",
+        "ingredientes_receita.receita",
+        "receita.id"
+      )
+      .where("receita.id", "=", id_receita)
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  }
+
   getIngredienteById(req, res) {
     const id = parseInt(req.params.id);
     db.select()

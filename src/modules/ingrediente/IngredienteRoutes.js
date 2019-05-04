@@ -7,4 +7,6 @@ routes.put("/putIngrediente/:id", IngredienteController.updateIngrediente);
 routes.post("/removeIngrediente/:id", IngredienteController.removeIngredienteById);
 routes.post("/addIngrediente", IngredienteController.insertIngrediente);
 
+routes.get("/getIngredientesByReceita/:id", IngredienteController.getIngredientesByReceita);
+
 module.exports = routes;
