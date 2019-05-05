@@ -14,10 +14,12 @@ const TipoPrato = require("./src/modules/tipo_prato/TipoPratoRoutes");
 const TiposPrato = require("./src/modules/tipos_prato/TiposPratoRoutes");
 const Sigin = require("./src/modules/auth/SigninRoutes");
 const { initialize, authenticate } = require("./src/config/passport");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3001;
 app.use(bodyParser.json());
+app.use(cors({ credentials: true, origin: true }));
 app.db = db;
 
 app.use(initialize());
@@ -28,7 +30,7 @@ app.use(Sigin);
 app.use(AutorRoutes);
 app.use(AdminRoutes);
 app.get("/", (req, res) => {
-    res.status(200).send("Verifique o código fonte");
+  res.status(200).send("Verifique o código fonte");
 });
 // app.use(authenticate());
 
@@ -46,9 +48,8 @@ app.use(IngredientesReceita);
 app.use(TipoPrato);
 app.use(TiposPrato);
 
-
 app.set("json spaces", 4);
 
 app.listen(port, () => {
-    console.log(`Servidor disponível na porta ${port}`);
+  console.log(`Servidor disponível na porta ${port}`);
 });
