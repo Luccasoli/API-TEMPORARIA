@@ -10,5 +10,6 @@ routes.post("/addReceita", ReceitaController.insertReceita);
 routes.get("/getReceitasByIngrediente/:id", ReceitaController.getReceitasByIngrediente);
 routes.get("/getReceitasByAutor/:id", ReceitaController.getReceitasByAutor);
 routes.get("/getReceitasByPrato/:id", ReceitaController.getReceitasByPrato);
+routes.get("/getRecomendado/:tipo", ReceitaController.getRecomendadoPrincipal);
 
 module.exports = routes;

@@ -25,7 +25,7 @@ class ReceitaController {
       "tempo_preparo",
       "receita.imgs",
       "receita.autor",
-      "receita.prato"
+      "receita.tipo"
     )
       .table(tableName)
       .innerJoin(
@@ -58,7 +58,7 @@ class ReceitaController {
       "tempo_preparo",
       "receita.imgs",
       "receita.autor",
-      "receita.prato"
+      "receita.tipo"
     )
       .table(tableName)
       .innerJoin("autor", "receita.autor", "autor.id")
@@ -82,10 +82,10 @@ class ReceitaController {
       "tempo_preparo",
       "receita.imgs",
       "receita.autor",
-      "receita.prato"
+      "receita.tipo"
     )
       .table(tableName)
-      .innerJoin("prato", "receita.prato", "prato.id")
+      .innerJoin("prato", "receita.tipo", "prato.id")
       .where("prato.id", "=", id_prato)
       .then(data => {
         res.status(200).json(data);
@@ -116,11 +116,11 @@ class ReceitaController {
       tempo_preparo,
       imgs,
       autor,
-      prato
+      tipo
     } = req.body;
 
     db(tableName)
-      .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
+      .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, tipo })
       .returning("*")
       .then(data => {
         res.status(200).json(data);
@@ -153,12 +153,12 @@ class ReceitaController {
       tempo_preparo,
       imgs,
       autor,
-      prato
+      tipo
     } = req.body;
 
     db(tableName)
       .where({ id })
-      .update({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
+      .update({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, tipo })
       .returning("*")
       .then(data => {
         res.status(200).json(data);
@@ -166,6 +166,20 @@ class ReceitaController {
       .catch(err => {
         res.status(500).json(err);
       });
+  }
+
+  getRecomendadoPrincipal(req, res) {
+    const tipo = req.params.tipo
+    db(tableName)
+    .select(
+      "nome",
+      "passos",
+      "tempo_preparo",
+      "qnt_porcoes",
+      "autor.nome"      
+    )
+    .join("autor", "receita.autor")
+    .where("tipo", "=",{tipo}, "and", "autor", "=", "autor.id") 
   }
 }
 

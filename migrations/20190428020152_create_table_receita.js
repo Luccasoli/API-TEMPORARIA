@@ -6,16 +6,12 @@ exports.up = function(knex, Promise) {
     table.integer("qnt_porcoes").notNull();
     table.float("tempo_preparo").notNull();
     table.specificType("imgs", "text[]");
+    table.string("tipo",20).notNull();
 
     table
       .integer("autor")
       .references("id")
       .inTable("autor")
-      .notNull();
-    table
-      .integer("prato")
-      .references("id")
-      .inTable("prato")
       .notNull();
   });
 };

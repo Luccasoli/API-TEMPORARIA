@@ -70,6 +70,14 @@ class PratoController {
         res.status(500).json(err);
       });
   }
+
+  getRecomendadoPrincipal(req, res) {
+    db(tableName)
+    .join('receita', 'receita.codPrato')
+    .select('receita.nome', 'receita.passos', 'receita.tempo_preparo', 
+    'receita.qnt_porcoes')
+    .where('tipo', '=','principal') 
+  }
 }
 
 module.exports = new PratoController();
