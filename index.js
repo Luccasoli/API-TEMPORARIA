@@ -46,6 +46,7 @@ app.use(IngredienteRoutes);
 app.use(AvaliacaoRoutes);
 app.use(EditarReceitaRoutes);
 app.use(IngredientesReceita);
+app.use(RecomendadoRoutes);
 app.use(TipoPrato);
 app.use(TiposPrato);
 
