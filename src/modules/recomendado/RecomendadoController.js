@@ -4,19 +4,11 @@ const tableName = 'receita'
 
 class RecomendadoController{
     async getRecomendadoPrincipal(req, res) {
-        db.select(
-            "receita.nome",
-            "receita.passos",
-            "receita.qnt_porcoes",
-            "tempo_preparo",
-            "receita.imgs", 
-            "autor.nome"
-        )
-            .join("autor", "autor", "=", "autor.id")
-            .join("prato", "prato", "=", "prato.id")
+        db.join("prato", "receita.autor", "=", "prato.id")
+            .select("receita.nome", "prato.tipo")
             .table(tableName)
             .where("prato.tipo", "=", "Principal")
-            .orderBy("random()", "LIMIT", 1)
+            //.orderBy("random()", "LIMIT", 1)
             .then(data => {
                 res.status(200).json(data);
               })
