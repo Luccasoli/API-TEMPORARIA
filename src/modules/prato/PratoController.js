@@ -1,6 +1,6 @@
 const db = require("../../config/db");
 
-const tableName = 'prato'
+const tableName = "prato";
 
 class PratoController {
   async getPratos(req, res) {
@@ -30,8 +30,8 @@ class PratoController {
   insertPrato(req, res) {
     let { nome, imgs, tipo } = req.body;
 
-    imgs = imgs.replace(/'/g, '"')
-    imgs = JSON.parse(imgs)
+    imgs = imgs.replace(/'/g, '"');
+    imgs = JSON.parse(imgs);
 
     db(tableName)
       .insert({ nome, imgs, tipo })
@@ -62,8 +62,8 @@ class PratoController {
     const id = parseInt(req.params.id);
     let { nome, imgs, tipo } = req.body;
 
-    imgs = imgs.replace(/'/g, '"')
-    imgs = JSON.parse(imgs)
+    imgs = imgs.replace(/'/g, '"');
+    imgs = JSON.parse(imgs);
 
     db(tableName)
       .where({ id })
