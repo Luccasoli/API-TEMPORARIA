@@ -171,14 +171,14 @@ class ReceitaController {
 
   getRecomendado(req, res){
     const tipo = req.params.tipo.toString();
-    db.select("prato.nome","tempo_preparo","qnt_porcoes")
-      .innerJoin(
+    db.innerJoin(
         "prato",
-        "prato.id",
-        `${tableName}.prato`
+        `${tableName}.prato`,
+        "prato.id"
       )
+      .select("prato.nome","tempo_preparo","qnt_porcoes")
       .table(tableName)
-      .where("prato.tipo", "LIKE", "principal")
+      .where("prato.tipo", "LIKE",  tipo)
       //.orderBy("RAND()", "LIMIT", 1)
       .then(data => {
         res.status(200).json(data);
