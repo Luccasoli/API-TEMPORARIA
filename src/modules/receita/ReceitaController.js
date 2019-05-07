@@ -109,7 +109,7 @@ class ReceitaController {
   }
 
   insertReceita(req, res) {
-    const {
+    let {
       nome,
       passos,
       qnt_porcoes,
@@ -118,6 +118,9 @@ class ReceitaController {
       autor,
       prato
     } = req.body;
+
+    passos = passos.replace(/'/g, '"')
+    passos = JSON.parse(passos)
 
     db(tableName)
       .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
