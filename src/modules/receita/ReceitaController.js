@@ -171,7 +171,7 @@ class ReceitaController {
 
   getRecomendado(req, res){
     const tipo = req.params.tipo.toString();
-    db.select("nome","tempo_prepraro","qnt_porcoes")
+    db.select("prato.nome","tempo_preparo","qnt_porcoes")
       .innerJoin(
         "prato",
         "prato.id",
