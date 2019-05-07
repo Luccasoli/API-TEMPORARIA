@@ -3,6 +3,7 @@ const ReceitaController = require("./ReceitaController");
 
 routes.get("/getReceitas", ReceitaController.getReceitas);
 routes.get("/getReceita/:id", ReceitaController.getReceitaById);
+routes.get("/getRecomendado/:tipo", ReceitaController.getRecomendado);
 routes.put("/putReceita/:id", ReceitaController.updateReceita);
 routes.post("/removeReceita/:id", ReceitaController.removeReceitaById);
 routes.post("/addReceita", ReceitaController.insertReceita);
