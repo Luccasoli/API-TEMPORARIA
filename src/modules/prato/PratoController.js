@@ -30,9 +30,6 @@ class PratoController {
   insertPrato(req, res) {
     let { nome, imgs, tipo } = req.body;
 
-    imgs = imgs.replace(/'/g, '"')
-    imgs = JSON.parse(imgs)
-
     db(tableName)
       .insert({ nome, imgs, tipo })
       .returning("*")
@@ -61,9 +58,6 @@ class PratoController {
   updatePrato(req, res) {
     const id = parseInt(req.params.id);
     let { nome, imgs, tipo } = req.body;
-
-    imgs = imgs.replace(/'/g, '"')
-    imgs = JSON.parse(imgs)
 
     db(tableName)
       .where({ id })
