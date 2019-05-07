@@ -167,6 +167,26 @@ class ReceitaController {
         res.status(500).json(err);
       });
   }
+
+
+  getRecomendado(req, res){
+    const tipo = req.params.tipo.toString();
+    db.select("prato.nome","tempo_preparo","qnt_porcoes")
+      .innerJoin(
+        "prato",
+        "prato.id",
+        `${tableName}.prato`
+      )
+      .table(tableName)
+      .where("prato.tipo", "LIKE", "principal")
+      //.orderBy("RAND()", "LIMIT", 1)
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  }
 }
 
 module.exports = new ReceitaController();
