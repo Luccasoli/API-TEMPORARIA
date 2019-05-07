@@ -122,6 +122,9 @@ class ReceitaController {
     passos = passos.replace(/'/g, '"')
     passos = JSON.parse(passos)
 
+    imgs = imgs.replace(/'/g, '"')
+    imgs = JSON.parse(imgs)
+
     db(tableName)
       .insert({ nome, passos, qnt_porcoes, tempo_preparo, imgs, autor, prato })
       .returning("*")
@@ -149,7 +152,7 @@ class ReceitaController {
 
   updateReceita(req, res) {
     const id = parseInt(req.params.id);
-    const {
+    let {
       nome,
       passos,
       qnt_porcoes,
@@ -158,6 +161,12 @@ class ReceitaController {
       autor,
       prato
     } = req.body;
+
+    passos = passos.replace(/'/g, '"')
+    passos = JSON.parse(passos)
+
+    imgs = imgs.replace(/'/g, '"')
+    imgs = JSON.parse(imgs)
 
     db(tableName)
       .where({ id })
