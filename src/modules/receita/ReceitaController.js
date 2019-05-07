@@ -176,11 +176,11 @@ class ReceitaController {
         `${tableName}.prato`,
         "prato.id"
       )
-      .select("prato.nome","tempo_preparo","qnt_porcoes")
+      .select("prato.nome","autor", "passos", "tempo_preparo","qnt_porcoes")
       .table(tableName)
-      .limit(1)
       .where("prato.tipo", "LIKE",  tipo)
-      .orderBy(RANDOM(), 'LIMIT', 1)
+      .orderBy(RANDOM())
+      .limit(1)
       .then(data => {
         res.status(200).json(data);
       })
